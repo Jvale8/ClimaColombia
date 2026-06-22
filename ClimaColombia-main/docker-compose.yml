@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./Backend
+    container_name: climacolombia-backend
+    ports:
+      - "3000:3000"
+    command:
+      ["npm", "run", "dev"]
+    networks:
+      - clima-network
+
+  frontend:
+    build: ./FrontEnd
+    container_name: climacolombia-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=/api/weather
+    depends_on:
+      - backend
+    command:
+      ["npm", "run", "dev", "--", "--host"]
+    networks:
+      - clima-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: climacolombia-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - clima-network
+
+networks:
+  clima-network:
+    driver: bridge

@@ -1,0 +1,14 @@
+FROM jenkins/jenkins:lts
+USER root
+
+# Instalar Node.js v20
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
+
+# Instalar Docker (Cliente y Motor para mapear socket)
+RUN curl -fsSL https://get.docker.com/ | sh
+
+# Permitir a jenkins ejecutar comandos docker
+RUN usermod -aG docker jenkins
+
+USER jenkins

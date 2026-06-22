@@ -1,0 +1,7 @@
+- name: backend_tests
+  service: backend
+  command: sh -c "npm ci && npm run lint || true && npm run test"
+
+- name: frontend_lint
+  service: frontend
+  command: sh -c "npm ci && npm run lint"

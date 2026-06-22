@@ -1,0 +1,12 @@
+backend:
+  build:
+    image: climacolombia-backend
+    dockerfile: Backend/Dockerfile
+  volumes:
+    - ./Backend:/app
+frontend:
+  build:
+    image: climacolombia-frontend
+    dockerfile: FrontEnd/Dockerfile
+  volumes:
+    - ./FrontEnd:/app
